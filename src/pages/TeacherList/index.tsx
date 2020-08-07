@@ -39,22 +39,25 @@ function TeacherList() {
                                 Kengy Guedes de Freitas
                             </strong>
                             <span>Química</span>
-                            <p>
-                                Entusiasta das melhores tecnologias de química avançada.
-                             <br /><br/>
-                             Apaixonado por explodir coisas em laboratório e por mudar a vida das pessoas através de experiências. Mais de 200.000 pessoas já passaram por uma das minhas explosões.
-                            </p>
-                            <footer>
-                                <p>
-                                    Preço / hora
-                                    <strong>R$ 150,00</strong>
-                                </p>
-                                <button type="button">
-                                    <img src={whatsappIcon} alt="Whatsapp"/>
-                                </button>
-                            </footer>
                         </div>
                     </header>
+                    <p>
+                        Entusiasta das melhores tecnologias de química avançada.
+                         <br /><br />
+                         Apaixonado por explodir coisas em laboratório e por mudar a vida das pessoas através de experiências. Mais de 200.000 pessoas já passaram por uma das minhas explosões.
+                    </p>
+                    <footer>
+                        <p>
+                            Preço / hora
+                                    <strong>R$ 150,00</strong>
+                        </p>
+                        <button type="button">
+                            <img src={whatsappIcon} alt="Whatsapp" />
+                            <p>Entrar em contato</p>
+
+                        </button>
+
+                    </footer>
                 </article>
             </main>
         </div>

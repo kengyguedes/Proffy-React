@@ -16,9 +16,8 @@
     "react-scripts": "3.4.1",
     "typescript": "~3.7.2"
   },
-  
   "scripts": {
-    "start": "yarn global add serve && serve -s build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
