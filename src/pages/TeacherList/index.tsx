@@ -1,64 +1,94 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import logoImg from '../../assets/images/logo.svg'
 import backIcon from '../../assets/images/icons/back.svg'
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg'
 import './style.css';
 import PageHeader from '../../componets/PageHeader';
+import TeacherItem, {Teacher} from '../../componets/TeacherItem';
+import Input from '../../componets/Input';
+import Select from '../../componets/Select';
+import api from '../../services/apii';
 
 
 
 function TeacherList() {
+    const [teachers, setTeachers] = useState([])
+
+    const [subject, setSubject] = useState('')
+    const [week_day, setWeek_day] = useState('')
+    const [time, setTime] = useState('')
+
+    async function searchTeachers(e: FormEvent) {
+        e.preventDefault()
+
+        const data = await api.get('classes', {
+            params: {
+                subject,
+                week_day,
+                time
+            }
+        })
+
+        setTeachers(data.data)
+    }
+
     return (
         <div id="page-teacher-list" className="container">
             <PageHeader title="Esses são os proffys disponíveis ">
-                <form id="search-teachers">
-                    <div className="input-block">
-                        <label htmlFor="subject">Matérias</label>
-                        <input type="text" id="jubject" />
-                    </div>
+                <form id="search-teachers" onSubmit={searchTeachers}>
+                    <Select
+                        name=' Matéria'
+                        label='subject'
+                        value={subject}
+                        onChange={e => { setSubject(e.target.value) }}
+                        options={[
+                            { value: 'Artes', label: 'Artes' },
+                            { value: 'Biologis', label: 'Biologis' },
+                            { value: 'Ciências', label: 'Ciências' },
+                            { value: 'Física', label: 'Física' },
+                            { value: 'Geografia', label: 'Geografia' },
+                            { value: 'Matemática', label: 'Matemática' },
+                            { value: 'Química', label: 'Química' },
+                            { value: 'Português', label: 'Português' },
+                            { value: 'História', label: 'História' },
+                        ]}
+                    />
 
-                    <div className="input-block">
-                        <label htmlFor="weed-day">Dia da semana</label>
-                        <input type="text" id="weed-day" />
-                    </div>
+                    <Select
+                        name='Dia da semana'
+                        label='weed-day'
+                        value={week_day}
+                        onChange={e => { setWeek_day(e.target.value) }}
+                        options={[
+                            { value: '0', label: 'Domingo' },
+                            { value: '1', label: 'Segunda-feira' },
+                            { value: '2', label: 'Terça-feira' },
+                            { value: '3', label: 'Quarta-feira' },
+                            { value: '4', label: 'Quinta-feira' },
+                            { value: '5', label: 'Sexta-feira' },
+                            { value: '6', label: 'Sábado' }
+                        ]}
+                    />
+                    <Input
+                        name='time'
+                        label='Hora'
+                        type='time'
+                        value={time}
+                        onChange={e => { setTime(e.target.value) }} />
 
-                    <div className="input-block">
-                        <label htmlFor="time">Hora</label>
-                        <input type="text" id="time" />
-                    </div>
+                    <button type='submit'>
+                        Buscar
+                     </button>
                 </form>
             </PageHeader>
 
             <main>
-                <article className="teacher-item">
-                    <header>
-                        <img src="https://scontent-gru1-1.xx.fbcdn.net/v/t1.0-9/46513157_186027849013861_2589128263100006400_n.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=_RvqCM2ohGYAX9tgS4D&_nc_ht=scontent-gru1-1.xx&oh=d1c364ef13ddcc2bb4da301c34c38055&oe=5F5350C4" alt="Kengy Guedes" />
-                        <div>
-                            <strong>
-                                Kengy Guedes de Freitas
-                            </strong>
-                            <span>Química</span>
-                        </div>
-                    </header>
-                    <p>
-                        Entusiasta das melhores tecnologias de química avançada.
-                         <br /><br />
-                         Apaixonado por explodir coisas em laboratório e por mudar a vida das pessoas através de experiências. Mais de 200.000 pessoas já passaram por uma das minhas explosões.
-                    </p>
-                    <footer>
-                        <p>
-                            Preço / hora
-                                    <strong>R$ 150,00</strong>
-                        </p>
-                        <button type="button">
-                            <img src={whatsappIcon} alt="Whatsapp" />
-                            <p>Entrar em contato</p>
 
-                        </button>
-
-                    </footer>
-                </article>
+                {teachers.map((teacher: Teacher)=>{
+                return  <TeacherItem key={teacher.id} teacher={teacher} />
+                })}
+                
             </main>
         </div>
     )
